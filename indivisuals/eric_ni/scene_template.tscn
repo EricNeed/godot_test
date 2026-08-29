@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://daugbrntwicpp"]
+
+[ext_resource type="Material" uid="uid://bdfontd20db33" path="res://global_resources/materials/placeholder_tile.tres" id="1_f1wjk"]
+[ext_resource type="PackedScene" uid="uid://cbg2ruj1ud8du" path="res://scenes/Player/Player.tscn" id="2_vxk1j"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tk74m"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_ar6ev"]
+sky_material = SubResource("ProceduralSkyMaterial_tk74m")
+
+[sub_resource type="Environment" id="Environment_hv6tf"]
+background_mode = 2
+sky = SubResource("Sky_ar6ev")
+glow_enabled = true
+
+[node name="SceneTemplate" type="Node3D" unique_id=1133173631]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1170066576]
+environment = SubResource("Environment_hv6tf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=352130053]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Terrain" type="Node3D" parent="." unique_id=867058353]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Terrain" unique_id=1523078639]
+editor_description = "container that apply the boolean operation of all its child
+
+need to turn on \"Use Collision\" to collide with player or other objects"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0)
+use_collision = true
+
+[node name="BasePlate" type="CSGBox3D" parent="Terrain/CSGCombiner3D" unique_id=1084108087]
+editor_description = "the floor we are standing on
+
+the \"Union\" operation mode will combine other CSG shape that is \"Union\"mode under one combiner to form one singular mesh"
+size = Vector3(100, 10, 100)
+material = ExtResource("1_f1wjk")
+
+[node name="CutBox" type="CSGBox3D" parent="Terrain/CSGCombiner3D" unique_id=1712633179]
+editor_description = "create a hole on another CSG shape
+
+you can recreate this by creating a CSGBox3D, switch the \"Operation\" propertie to \"Subtraction\" mode, and move this shape to overlap on another CSGBox3D (or any CSG shape). both CSG  shape must be inside of a CSGCombiner3D"
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 5, -1)
+operation = 2
+size = Vector3(2, 1, 2)
+material = ExtResource("1_f1wjk")
+
+[node name="Pole" type="CSGCylinder3D" parent="Terrain/CSGCombiner3D" unique_id=2054345756]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 4.7093077, 0)
+material = ExtResource("1_f1wjk")
+
+[node name="Pole2" type="CSGCylinder3D" parent="Terrain/CSGCombiner3D" unique_id=270554210]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.898941, 4.4285, 3.955293)
+material = ExtResource("1_f1wjk")
+
+[node name="Pole3" type="CSGCylinder3D" parent="Terrain/CSGCombiner3D" unique_id=1531884341]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.210035, 4.9550066, 3.3587341)
+material = ExtResource("1_f1wjk")
+
+[node name="Pole4" type="CSGCylinder3D" parent="Terrain/CSGCombiner3D" unique_id=1664478376]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.0700226, 5.963155, 1.897928)
+material = ExtResource("1_f1wjk")
+
+[node name="Pole5" type="CSGCylinder3D" parent="Terrain/CSGCombiner3D" unique_id=1180002245]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3852315, 5.7136416, 0.56341887)
+height = 1.203125
+material = ExtResource("1_f1wjk")
+
+[node name="Player" parent="." unique_id=714137968 instance=ExtResource("2_vxk1j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8240519, 0)
