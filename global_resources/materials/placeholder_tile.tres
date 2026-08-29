@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bdfontd20db33"]
+
+[ext_resource type="Texture2D" uid="uid://lixq5y3p0wu5" path="res://global_resources/textures/floor_tile.png" id="1_8s51c"]
+
+[resource]
+albedo_texture = ExtResource("1_8s51c")
+uv1_triplanar = true
+uv1_world_triplanar = true
