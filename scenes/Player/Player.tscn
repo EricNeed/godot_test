@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://cbg2ruj1ud8du"]
 
 [ext_resource type="Script" uid="uid://ygi4ogrktl6o" path="res://scenes/Player/player.gd" id="1_h00vy"]
+[ext_resource type="Script" uid="uid://5q42fy0iftyu" path="res://scenes/Player/camera_3d.gd" id="2_ky53y"]
+[ext_resource type="Script" uid="uid://bc8n5xvwqph04" path="res://scenes/Player/input_manager.gd" id="3_bvqhm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qabgp"]
 
@@ -12,3 +14,23 @@ shape = SubResource("CapsuleShape3D_qabgp")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1457507785]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.70060366, 0)
+script = ExtResource("2_ky53y")
+
+[node name="InputManager" type="Node" parent="." unique_id=940193678]
+script = ExtResource("3_bvqhm")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=353987566]
+editor_description = "Container for 2d element in 3d node."
+follow_viewport_scale = 0.001
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=516215226]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -197.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Press \"Esc\" to free mouse"

@@ -15,6 +15,10 @@ background_mode = 2
 sky = SubResource("Sky_ar6ev")
 glow_enabled = true
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_qabgp"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_qabgp"]
+
 [node name="SceneTemplate" type="Node3D" unique_id=1133173631]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1170066576]
@@ -71,4 +75,14 @@ height = 1.203125
 material = ExtResource("1_f1wjk")
 
 [node name="Player" parent="." unique_id=714137968 instance=ExtResource("2_vxk1j")]
+editor_description = "your scene need to have one Player node to play"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8240519, 0)
+
+[node name="Ball" type="RigidBody3D" parent="." unique_id=1915335494]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7114916, 1.4480424)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball" unique_id=578474158]
+shape = SubResource("SphereShape3D_qabgp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball" unique_id=827664296]
+mesh = SubResource("SphereMesh_qabgp")

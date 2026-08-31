@@ -1,18 +1,13 @@
 extends CharacterBody3D
 ## master player control script
 ## contain the code for:
-## 		- player movement
-##		- camera rotation using mouse input
-##		- phisics: jump and fall and movement velocity
+## 	- player movement
+##	- phisics: jump and fall and movement velocity
 
 
-@export var speed = 5.0
-@export var jump_velocity = 4.5
-@export var camera_sensitivity = 0.2
-
-var camera_rotate_x = 0 #current rotation around x axis
-var camera_rotate_y = 0 #current rotation around y axis
-
+@export var speed := 5.0
+@export var jump_velocity := 4.5
+@export var push_force := 1.0
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -35,43 +30,12 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
 	move_and_slide()
-
-
-
-func _update_camera(y:int, x:int):
-	rotation_degrees.y = y
-	$Camera3D.rotation_degrees.x = x
 	
-func _unhandled_input(event: InputEvent) -> void:
-	#handle mouse input
-	if event is InputEventMouseMotion:
-		if not (Input.mouse_mode == Input.MOUSE_MODE_CAPTURED): return
+	# Apply force to any RigidBody touched during movement
+	for i in get_slide_collision_count():
+		var collision := get_slide_collision(i)
+		var collider := collision.get_collider()
 		
-		#rotate the entire player node around Y axis (left and right)
-		camera_rotate_y -= event.relative.x * camera_sensitivity
-		#rotate the cramera along its x axis (up and down)
-		camera_rotate_x -= event.relative.y * camera_sensitivity
-		camera_rotate_x = clamp(camera_rotate_x, -90, 90)
-		
-		_update_camera(camera_rotate_y, camera_rotate_x)
-		
-	# handle press escape to free mouse
-	elif event.is_action_pressed("ui_cancel"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	elif event.is_action_pressed("LMB") && Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	else:
-		return
-	
-	# mark this input event as handled, even if _unhandled_input() was decleared in another script, it wont process this again
-	get_viewport().set_input_as_handled()
-
-
-# get camera rotation, for other scripts
-func get_camera_rotation() -> Vector2:
-	return Vector2(camera_rotate_x, camera_rotate_y)
-# get camera rotation, for other scripts, eg: force player to look some where
-func set_camera_rotation(rotation_x, rotation_y) -> void:
-	camera_rotate_y = rotation_y
-	camera_rotate_x = rotation_x
-	_update_camera(rotation_y, rotation_x)
+		if collider is RigidBody3D:
+			var push_dir = -collision.get_normal()
+			collider.apply_central_impulse(push_dir * push_force)
