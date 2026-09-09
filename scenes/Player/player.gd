@@ -5,9 +5,13 @@ extends CharacterBody3D
 ##	- phisics: jump and fall and movement velocity
 
 
-@export var speed := 5.0
+@export var speed := 3.0
 @export var jump_velocity := 4.5
 @export var push_force := 1.0
+
+
+var is_playing_anim = false
+@onready var anim_manager = $AnimationTree
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -25,10 +29,16 @@ func _physics_process(delta: float) -> void:
 	if direction:
 		velocity.x = direction.x * speed
 		velocity.z = direction.z * speed
+		if not is_playing_anim:
+			anim_manager.start_walking()
+			is_playing_anim = true
 	else:
 		#interpolate the velocity of character to zero
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
+		if is_playing_anim:
+			anim_manager.stop_walking()
+			is_playing_anim = false
 	move_and_slide()
 	
 	# Apply force to any RigidBody touched during movement

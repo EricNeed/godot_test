@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://daugbrntwicpp"]
 
 [ext_resource type="Material" uid="uid://bdfontd20db33" path="res://global_resources/materials/placeholder_tile.tres" id="1_f1wjk"]
-[ext_resource type="PackedScene" uid="uid://cbg2ruj1ud8du" path="res://scenes/Player/Player.tscn" id="2_vxk1j"]
+[ext_resource type="PackedScene" uid="uid://cbg2ruj1ud8du" path="res://scenes/player/player.tscn" id="2_vxk1j"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tk74m"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)

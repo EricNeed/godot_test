@@ -1,10 +1,14 @@
 [gd_scene format=3 uid="uid://cbg2ruj1ud8du"]
 
-[ext_resource type="Script" uid="uid://ygi4ogrktl6o" path="res://scenes/Player/player.gd" id="1_h00vy"]
-[ext_resource type="Script" uid="uid://5q42fy0iftyu" path="res://scenes/Player/camera_3d.gd" id="2_ky53y"]
-[ext_resource type="Script" uid="uid://bc8n5xvwqph04" path="res://scenes/Player/input_manager.gd" id="3_bvqhm"]
+[ext_resource type="Script" uid="uid://ygi4ogrktl6o" path="res://scenes/player/player.gd" id="1_h00vy"]
+[ext_resource type="Script" uid="uid://5q42fy0iftyu" path="res://scenes/player/camera_3d.gd" id="2_ky53y"]
+[ext_resource type="Script" uid="uid://bc8n5xvwqph04" path="res://scenes/player/input_manager.gd" id="3_bvqhm"]
+[ext_resource type="PackedScene" uid="uid://gaj0hetm2em6" path="res://global_resources/mesh/character/rig1_textured7.glb" id="4_ved6o"]
+[ext_resource type="PackedScene" uid="uid://bwykvfb3spau7" path="res://scenes/player/animation_tree.tscn" id="5_xcisb"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qabgp"]
+radius = 0.3
+height = 1.8
 
 [node name="Player" type="CharacterBody3D" unique_id=714137968]
 script = ExtResource("1_h00vy")
@@ -13,7 +17,7 @@ script = ExtResource("1_h00vy")
 shape = SubResource("CapsuleShape3D_qabgp")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1457507785]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.70060366, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 script = ExtResource("2_ky53y")
 
 [node name="InputManager" type="Node" parent="." unique_id=940193678]
@@ -34,3 +38,26 @@ offset_top = -23.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "Press \"Esc\" to free mouse"
+
+[node name="RigMesh" parent="." unique_id=1080381213 instance=ExtResource("4_ved6o")]
+transform = Transform3D(-0.8, 0, -6.9938224e-08, 0, 0.8, 0, 6.9938224e-08, 0, -0.8, 0, -0.863, 0)
+
+[node name="Skeleton3D" parent="RigMesh/Armature_001" parent_id_path=PackedInt32Array(1080381213, 1268375774) index="0" unique_id=714032830]
+bones/0/rotation = Quaternion(-0.023031306, -0.70673144, 0.02283893, 0.70673805)
+bones/1/rotation = Quaternion(-0.0069179833, -0.052022457, -0.009517199, 0.99857664)
+bones/3/rotation = Quaternion(0.55520886, 0.030192278, 0.072103456, 0.8280294)
+bones/4/rotation = Quaternion(0.05811478, 0.0014195027, 0.012465537, 0.9982311)
+bones/6/rotation = Quaternion(-0.003087703, -0.6143469, 0.78861237, -0.025668245)
+bones/7/rotation = Quaternion(0.5552098, -0.030195313, -0.07209997, 0.828029)
+bones/8/rotation = Quaternion(0.058114752, -0.0014195113, -0.012465526, 0.9982311)
+bones/10/rotation = Quaternion(-0.013929108, 0.00022843614, -0.1322504, 0.9911185)
+bones/11/rotation = Quaternion(-0.68433726, 0.021981766, 0.72873414, -0.012080974)
+bones/12/rotation = Quaternion(-0.0139162075, -0.0004708979, -0.05697474, 0.9982785)
+bones/13/rotation = Quaternion(0.04749582, -0.002414982, 0.7127079, 0.699847)
+bones/14/rotation = Quaternion(0.68433726, 0.021981766, 0.72873414, 0.012080974)
+bones/15/rotation = Quaternion(-0.0139162075, 0.0004708979, 0.05697474, 0.9982785)
+bones/16/rotation = Quaternion(0.04749582, 0.002414982, -0.7127079, 0.699847)
+
+[node name="AnimationTree" parent="." unique_id=1111084741 instance=ExtResource("5_xcisb")]
+
+[editable path="RigMesh"]

@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://bwykvfb3spau7"]
+
+[ext_resource type="Script" uid="uid://dwbvcmd0i7o6f" path="res://scenes/player/action_manager.gd" id="1_ue85m"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h54ih"]
+animation = &"Idel"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ude3g"]
+animation = &"walking_v2"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jmcll"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_t26db"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_825xp"]
+xfade_time = 1.0
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_h54ih"]
+xfade_time = 1.0
+advance_mode = 0
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ji083"]
+states/Idel/node = SubResource("AnimationNodeAnimation_h54ih")
+states/Idel/position = Vector2(541, 100)
+states/Start/position = Vector2(199, 100)
+states/walking_v2/node = SubResource("AnimationNodeAnimation_ude3g")
+states/walking_v2/position = Vector2(541, 33)
+transitions = ["Start", "walking_v2", SubResource("AnimationNodeStateMachineTransition_jmcll"), "Start", "Idel", SubResource("AnimationNodeStateMachineTransition_t26db"), "walking_v2", "Idel", SubResource("AnimationNodeStateMachineTransition_825xp"), "Idel", "walking_v2", SubResource("AnimationNodeStateMachineTransition_h54ih")]
+graph_offset = Vector2(-84.79268, -52.301258)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0kmp4"]
+animation = &"Idel"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_i5acl"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_epg6k"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_0u84n"]
+states/Idel/node = SubResource("AnimationNodeAnimation_0kmp4")
+states/Idel/position = Vector2(557, 40)
+transitions = ["Start", "Idel", SubResource("AnimationNodeStateMachineTransition_i5acl"), "Idel", "End", SubResource("AnimationNodeStateMachineTransition_epg6k")]
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_q3lat"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:Bone", "Armature/Skeleton3D:Bone.001", "Armature/Skeleton3D:lower_arm.l", "Armature/Skeleton3D:lower_arm.r", "Armature/Skeleton3D:shulder.l", "Armature/Skeleton3D:upper_arm.l", "Armature/Skeleton3D:upper_arm.r"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_q3lat"]
+nodes/output/position = Vector2(-40, 60)
+nodes/Blend2/node = SubResource("AnimationNodeBlend2_q3lat")
+nodes/Blend2/position = Vector2(-280, 60)
+nodes/AnimFullBody/node = SubResource("AnimationNodeStateMachine_ji083")
+nodes/AnimFullBody/position = Vector2(-580, 0)
+nodes/AnimUpperBody/node = SubResource("AnimationNodeStateMachine_0u84n")
+nodes/AnimUpperBody/position = Vector2(-580, 180)
+node_connections = [&"output", 0, &"Blend2", &"Blend2", 0, &"AnimFullBody", &"Blend2", 1, &"AnimUpperBody"]
+
+[node name="AnimationTree" type="AnimationTree" unique_id=1111084741]
+root_node = NodePath("../RigMesh")
+tree_root = SubResource("AnimationNodeBlendTree_q3lat")
+anim_player = NodePath("../RigMesh/AnimationPlayer")
+parameters/Blend2/blend_amount = 0.0
+script = ExtResource("1_ue85m")
